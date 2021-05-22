@@ -7,7 +7,7 @@ let package = Package(
         .library(name: "Nifty", targets: ["Nifty"])
     ],
     dependencies: [
-        .package(path: "../Nifty-libs"),
+        .package(url: "https://github.com/UnGast/Nifty-libs", .branch("master")),
     ],
     targets: [
         .target(name: "Nifty", dependencies: [.product(name: "CLapacke", package: "Nifty-libs"), .product(name: "CBlas", package: "Nifty-libs")])
