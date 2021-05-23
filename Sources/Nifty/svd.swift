@@ -28,7 +28,7 @@ import CLapacke
 // TODO: figure out better way to request just the singular values; the way below is ambiguous 
 // unless caller specifies the return type, which is just annoying.
 
-extension Nifty.Options
+extension NiftyNamespace.Options
 {
     public enum svd
     {
@@ -43,7 +43,7 @@ extension Nifty.Options
 ///    - opt: this parameter is unused in the function; its sole purpose is to allow the compiler to 
 ///        disambiguate between svd calls with different return types.
 /// - Returns: singular values of A, sorted in descending order
-public func svd(_ A: Matrix<Double>, _ opt: Nifty.Options.svd) -> Vector<Double>
+public func svd(_ A: Matrix<Double>, _ opt: NiftyNamespace.Options.svd) -> Vector<Double>
 {    
     var jobz: Int8 = 78 // ascii 'N'
     var m = Int32(A.rows)

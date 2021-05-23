@@ -20,7 +20,7 @@
  **************************************************************************************************/
 
 
-public class Nifty
+public class NiftyNamespace
 {
     /// Contains all options used throughout Nifty.
     ///

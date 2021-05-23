@@ -26,7 +26,7 @@
 /// - Returns: tangent of x
 public func tand(_ x: Double) -> Double 
 {
-    return tan(x * Nifty.Constants.pi/180)
+    return tan(x * NiftyNamespace.Constants.pi/180)
 }
 
 public func tand(_ v: Vector<Double>) -> Vector<Double>

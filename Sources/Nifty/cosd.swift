@@ -26,7 +26,7 @@
 /// - Returns: cosine of x
 public func cosd(_ x: Double) -> Double 
 {
-    return cos(x * Nifty.Constants.pi/180)
+    return cos(x * NiftyNamespace.Constants.pi/180)
 }
 
 public func cosd(_ v: Vector<Double>) -> Vector<Double>

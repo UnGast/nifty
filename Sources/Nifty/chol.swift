@@ -27,7 +27,7 @@ import Accelerate
 import CLapacke
 #endif
 
-extension Nifty.Options
+extension NiftyNamespace.Options
 {
     public enum chol
     {
@@ -45,7 +45,7 @@ extension Nifty.Options
 ///     - A: matrix to decompose
 ///     - option: request upper or lower triangular result    
 /// - Returns: requested triangular matrix
-public func chol(_ A: Matrix<Double>, _ option: Nifty.Options.chol = .upper) -> Matrix<Double>
+public func chol(_ A: Matrix<Double>, _ option: NiftyNamespace.Options.chol = .upper) -> Matrix<Double>
 {
     var uplo: Int8
     switch option

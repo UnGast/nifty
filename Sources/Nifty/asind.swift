@@ -26,7 +26,7 @@
 /// - Returns: arc sine of x
 public func asind(_ x: Double) -> Double 
 {
-    return asin(x) * 180/Nifty.Constants.pi
+    return asin(x) * 180/NiftyNamespace.Constants.pi
 }
 
 public func asind(_ v: Vector<Double>) -> Vector<Double>

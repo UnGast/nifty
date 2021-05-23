@@ -26,7 +26,7 @@
 /// - Returns: sine of x
 public func sind(_ x: Double) -> Double 
 {
-    return sin(x * Nifty.Constants.pi/180)
+    return sin(x * NiftyNamespace.Constants.pi/180)
 }
 public func sind(_ v: Vector<Double>) -> Vector<Double>
 {
