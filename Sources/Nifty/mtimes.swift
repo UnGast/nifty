@@ -39,7 +39,7 @@ public func * (left: Matrix<Double>, right: Matrix<Double>) -> Matrix<Double>
 ///     - A: left matrix
 ///     - B: right matrix
 /// - Returns: matrix product of A and B
-func mtimes(_ A: Matrix<Double>, _ B: Matrix<Double>) -> Matrix<Double>
+public func mtimes(_ A: Matrix<Double>, _ B: Matrix<Double>) -> Matrix<Double>
 {
     // TODO check size
 
