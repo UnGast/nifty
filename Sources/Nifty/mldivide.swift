@@ -85,7 +85,9 @@ public func mldivide(_ A: Matrix<Double>, _ B: Matrix<Double>) throws -> Matrix<
             
         #endif
         
-        precondition(info >= 0, "Illegal value in LAPACK argument \(-1*info)")
+        guard info >= 0 else {
+            throw NiftyError("Illegal value in LAPACK argument \(-1*info)")
+        }
         guard info == 0 else {
             throw NiftyError("Cannot solve singularity")
         }
