@@ -26,9 +26,9 @@ import CLapacke
 #endif
 
 infix operator -/ : MultiplicationPrecedence
-public func -/ (left: Matrix<Double>, right: Matrix<Double>) -> Matrix<Double>
+public func -/ (left: Matrix<Double>, right: Matrix<Double>) throws -> Matrix<Double>
 {
-    return mldivide(left, right)
+    try mldivide(left, right)
 }
 
 /// Solve the system of linear equations Ax = B for x.
@@ -41,7 +41,7 @@ public func -/ (left: Matrix<Double>, right: Matrix<Double>) -> Matrix<Double>
 ///     - A: matrix A in the equation Ax = B
 ///     - B: matrix B in the equation Ax = B
 /// - Returns: matrix x in the equation Ax = B
-public func mldivide(_ A: Matrix<Double>, _ B: Matrix<Double>) -> Matrix<Double>
+public func mldivide(_ A: Matrix<Double>, _ B: Matrix<Double>) throws -> Matrix<Double>
 {   
     // inherit name
     var newName: String? = nil
@@ -86,7 +86,9 @@ public func mldivide(_ A: Matrix<Double>, _ B: Matrix<Double>) -> Matrix<Double>
         #endif
         
         precondition(info >= 0, "Illegal value in LAPACK argument \(-1*info)")
-        precondition(info == 0, "Cannot solve singularity")
+        guard info == 0 else {
+            throw NiftyError("Cannot solve singularity")
+        }
         
         return Matrix(Int(n), Int(nrhs), b, name: newName, showName: A.showName || B.showName)                    
     }

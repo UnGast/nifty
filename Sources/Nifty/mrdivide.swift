@@ -23,9 +23,9 @@
 import CLapacke
 #endif
 
-public func / (left: Matrix<Double>, right: Matrix<Double>) -> Matrix<Double>
+public func / (left: Matrix<Double>, right: Matrix<Double>) throws -> Matrix<Double>
 {
-    return mrdivide(left, right)
+    return try mrdivide(left, right)
 }
 
 /// Solve the system of linear equations xA = B for x.
@@ -38,7 +38,7 @@ public func / (left: Matrix<Double>, right: Matrix<Double>) -> Matrix<Double>
 ///     - A: matrix A in the equation Ax = B
 ///     - B: matrix B in the equation Ax = B
 /// - Returns: matrix x in the equation Ax = B
-public func mrdivide(_ B: Matrix<Double>, _ A: Matrix<Double>) -> Matrix<Double>
+public func mrdivide(_ B: Matrix<Double>, _ A: Matrix<Double>) throws -> Matrix<Double>
 {
     // Note: xA = B can be re-written transpose(A)*transpose(x) = transpose(B). This second form is 
     // more conducive to solving as Ax=B is the standard form expected by LAPACK.
@@ -56,7 +56,7 @@ public func mrdivide(_ B: Matrix<Double>, _ A: Matrix<Double>) -> Matrix<Double>
 
     let A_t = transpose(A)
     let B_t = transpose(B)
-    let x_t = mldivide(A_t, B_t)
+    let x_t = try mldivide(A_t, B_t)
     var x = transpose(x_t)
     x.name = newName
 
