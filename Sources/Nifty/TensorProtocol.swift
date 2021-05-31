@@ -32,6 +32,10 @@ public protocol TensorProtocol: CustomStringConvertible
     /// Number of elements in each dimension of the tensor protocol type.
     var size: [Int] { get }
     
+    var shape: [Int] { get }
+
+    var dim: Int { get }
+
     /// Data contained in tensor protocol type in row-major order.
     var data: [Element] { get set }
     
@@ -82,4 +86,13 @@ public protocol TensorProtocol: CustomStringConvertible
     ///    - name: optional name of new tensor protocol type
     ///    - showName: optional display setting; by default, true if it has name, else false
     init(_ rawDescription: String, name: String?, showName: Bool?)
+}
+
+extension TensorProtocol {
+    public var shape: [Int] {
+        size
+    }
+    public var dim: Int {
+        size.count
+    }
 }
