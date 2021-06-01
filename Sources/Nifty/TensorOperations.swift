@@ -42,6 +42,10 @@ extension Tensor where Element: BinaryFloatingPoint {
 
     return result
   }
+
+  public static func random(_ shape: [Int], in range: Range<Element>) -> Tensor<Element> where Element.RawSignificand: FixedWidthInteger {
+    Tensor(shape, (0..<calcNumel(shape: shape)).map { _ in Element.random(in: range) })
+  }
 }
 
 /// element wise max of both tensors
