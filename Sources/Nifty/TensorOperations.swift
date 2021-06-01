@@ -43,3 +43,26 @@ extension Tensor where Element: BinaryFloatingPoint {
     return result
   }
 }
+
+/// element wise max of both tensors
+public func max<E>(_ t1: Tensor<E>, _ t2: Tensor<E>) -> Tensor<E> where E: Comparable {
+  precondition(t1.shape == t2.shape, "shapes must match")
+
+  var result = t1
+
+  for i in 0..<t1.count {
+    result.data[i] = max(result.data[i], t2.data[i])
+  }
+
+  return result
+}
+
+/// tensor value if bigger than scalar or scalar if scalar is bigger
+public func max<E>(_ t: Tensor<E>, _ s: E) -> Tensor<E> where E: Comparable {
+  max(t, Tensor(t.shape, value: s))
+}
+
+/// tensor value if bigger than scalar or scalar if scalar is bigger
+public func max<E>(_ s: E, _ t: Tensor<E>) -> Tensor<E> where E: Comparable {
+  max(t, s)
+}
