@@ -46,7 +46,7 @@ public protocol TensorProtocol: CustomStringConvertible
     var showName: Bool { get set }
     
     /// Formatter to be used in displaying elements of tensor protocol type.
-    var format: NumberFormatter { get set }
+    var format: NumberFormatter { get }
     
     /// Representation of tensor protocol type in comma separated list.
     var rawDescription: String { get }

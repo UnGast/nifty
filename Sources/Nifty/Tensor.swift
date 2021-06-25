@@ -29,7 +29,15 @@ public struct Tensor<Element>: TensorProtocol
     public var data: [Element]
     public var name: String?
     public var showName: Bool
-    public var format: NumberFormatter
+    public var format: NumberFormatter {
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .decimal
+        fmt.usesSignificantDigits = true
+        fmt.paddingCharacter = " "
+        fmt.paddingPosition = .afterSuffix
+        fmt.formatWidth = 8
+        return fmt
+    }
 
     //----------------------------------------------------------------------------------------------
     // MARK: INITIALIZE
@@ -56,15 +64,6 @@ public struct Tensor<Element>: TensorProtocol
         {
             self.showName = name != nil
         }
-
-        // default display settings
-        let fmt = NumberFormatter()
-        fmt.numberStyle = .decimal
-        fmt.usesSignificantDigits = true
-        fmt.paddingCharacter = " "
-        fmt.paddingPosition = .afterSuffix
-        fmt.formatWidth = 8
-        self.format = fmt
     }
 
     public init(_ size: [Int], value: Element, name: String? = nil, showName: Bool? = nil)
