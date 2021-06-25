@@ -1,3 +1,14 @@
+extension Tensor {
+  /// - Returns: the only element if the tensor only contains one element, otherwise nil
+  public var item: Element? {
+    if count == 1 {
+      return data[0]
+    } else {
+      return nil
+    }
+  }
+}
+
 extension Tensor where Element: Numeric {
   public static func += (lhs: inout Self, rhs: Self) {
     precondition(lhs.size == rhs.size, "sizes must match")
@@ -12,7 +23,64 @@ extension Tensor where Element: Numeric {
     result += rhs
     return result
   }
+
+  public static func -= (lhs: inout Self, rhs: Self) {
+    precondition(lhs.size == rhs.size, "sizes must match")
+
+    for i in 0..<lhs.count {
+      lhs.data[i] -= rhs.data[i]
+    }
+  }
+
+  public static func - (lhs: Self, rhs: Self) -> Self {
+    var result = lhs
+    result -= rhs
+    return result
+  }
+
+  /// - Returns: sum of all elements
+  public func sum() -> Element {
+    data.reduce(into: Element.zero) { $0 += $1 }
+  }
+
+  /// - Returns: element wise abs
+  public func abs() -> Self where Element: SignedNumeric, Element: Comparable {
+    var result = self
+    for i in 0..<count {
+      result.data[i] = Swift.abs(result.data[i])
+    }
+    return result
+  }
 }
+
+extension Tensor where Element: FloatingPoint {
+  public static func /= (lhs: inout Self, rhs: Self) {
+    precondition(lhs.size == rhs.size, "sizes must match")
+
+    for i in 0..<lhs.count {
+      lhs.data[i] /= rhs.data[i]
+    }
+  }
+
+  public static func / (lhs: Self, rhs: Self) -> Self {
+    var result = lhs
+    result /= rhs
+    return result
+  }
+
+  public static func /= (lhs: inout Self, rhs: Element) {
+    for i in 0..<lhs.count {
+      lhs.data[i] /= rhs
+    }
+  }
+
+  public static func / (lhs: Self, rhs: Element) -> Self {
+    var result = lhs
+    result /= rhs
+    return result
+  }
+}
+
 
 extension Tensor where Element: BinaryFloatingPoint {
   /// the two tensors have to be of shape rxn, nxc  
@@ -48,7 +116,18 @@ extension Tensor where Element: BinaryFloatingPoint {
   }
 }
 
-/// element wise max of both tensors
+extension Tensor where Element: Comparable {
+  /// - Returns: maximum element in whole tensor
+  public func max() -> Element {
+    data.reduce(into: Optional<Element>.none) {
+      if $0 == nil || $0! < $1 {
+        $0 = $1
+      }
+    }!
+  }
+}
+
+/// - Returns: element wise max of both tensors
 public func max<E>(_ t1: Tensor<E>, _ t2: Tensor<E>) -> Tensor<E> where E: Comparable {
   precondition(t1.shape == t2.shape, "shapes must match")
 
@@ -61,12 +140,12 @@ public func max<E>(_ t1: Tensor<E>, _ t2: Tensor<E>) -> Tensor<E> where E: Compa
   return result
 }
 
-/// tensor value if bigger than scalar or scalar if scalar is bigger
+/// - Returns: tensor value if bigger than scalar or scalar if scalar is bigger
 public func max<E>(_ t: Tensor<E>, _ s: E) -> Tensor<E> where E: Comparable {
   max(t, Tensor(t.shape, value: s))
 }
 
-/// tensor value if bigger than scalar or scalar if scalar is bigger
+/// - Returns: tensor value if bigger than scalar or scalar if scalar is bigger
 public func max<E>(_ s: E, _ t: Tensor<E>) -> Tensor<E> where E: Comparable {
   max(t, s)
 }
