@@ -9,6 +9,12 @@ extension Tensor {
   }
 }
 
+extension Tensor: Equatable where Element: Equatable {
+  public static func == (lhs: Self, rhs: Self) -> Bool {
+    lhs.data == rhs.data
+  }
+}
+
 extension Tensor where Element: Numeric {
   public static func += (lhs: inout Self, rhs: Self) {
     precondition(lhs.size == rhs.size, "sizes must match")
