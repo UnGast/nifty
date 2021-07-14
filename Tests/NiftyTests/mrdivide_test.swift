@@ -42,7 +42,7 @@ class mrdivide_test: XCTestCase
         // solve system of equations that has unique solution
         let A = Matrix<Double>([[1, 1, 3], [2, 0, 4], [-1, 6, -1]], name: "A")
         let B = Matrix<Double>([[2, 19, 8]], name: "B")
-        let x = B/A
+        let x = try! B/A
         let ansx = Matrix([[1.0, 2.0, 3.0]]) 
         
         print(A)
@@ -56,6 +56,6 @@ class mrdivide_test: XCTestCase
         print("Solving underdetermined system; expect to see rank deficient warning...")
         let C = Matrix<Double>([[1, 0], [2, 0], [1, 0]])
         let D = Matrix<Double>([[1, 2]])
-        let _ = mrdivide(D, C)        
+        let _ = try! mrdivide(D, C)        
     }
 }

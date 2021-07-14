@@ -42,7 +42,7 @@ class mldivide_test: XCTestCase
         // min norm solution of underdetermined system
         let A = Matrix<Double>([[1, 2, 0], [0, 4, 3]], name: "A")
         let B = Matrix<Double>([[8], [18]], name: "B")
-        let x = A-/B              
+        let x = try! A-/B              
         let Ax = A*x
         print(A)
         print(B)
@@ -59,7 +59,7 @@ class mldivide_test: XCTestCase
                                  [49,    92],
                                  [81,    80],
                                  [15,    96]], name: "B2")                
-        let x2 = A2-/B2
+        let x2 = try! A2-/B2
         let Ax2 = A2*x2
 
         print(A2)
