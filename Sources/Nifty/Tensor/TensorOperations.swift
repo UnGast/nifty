@@ -13,6 +13,14 @@ extension Tensor {
     Self(shape.filter { $0 != 1 }, data)
   }
 
+  /// - Returns: Same data. One dimension added at specified index.
+  /// Dimension at that index moves to the right.
+  public func unsqueezed(dim: Int) -> Self {
+    var newShape = shape
+    newShape.insert(1, at: dim)
+    return Self(newShape, data)
+  }
+
   /// works only for 2 dimensional tensors (matrices)
   /// - Returns: swapped columns and rows
   public func transposed() -> Self {
@@ -78,7 +86,7 @@ extension Tensor where Element: Numeric {
     return true
   }
 
-  public static func += (lhs: inout Self, rhs: Self) {
+  @inlinable public static func += (lhs: inout Self, rhs: Self) {
     precondition(lhs.size == rhs.size, "sizes must match")
 
     for i in 0..<lhs.count {
@@ -86,13 +94,13 @@ extension Tensor where Element: Numeric {
     }
   }
 
-  public static func + (lhs: Self, rhs: Self) -> Self {
+  @inlinable public static func + (lhs: Self, rhs: Self) -> Self {
     var result = lhs
     result += rhs
     return result
   }
 
-  public static func -= (lhs: inout Self, rhs: Self) {
+  @inlinable public static func -= (lhs: inout Self, rhs: Self) {
     precondition(lhs.size == rhs.size, "sizes must match")
 
     for i in 0..<lhs.count {
@@ -100,10 +108,42 @@ extension Tensor where Element: Numeric {
     }
   }
 
-  public static func - (lhs: Self, rhs: Self) -> Self {
+  @inlinable public static func - (lhs: Self, rhs: Self) -> Self {
     var result = lhs
     result -= rhs
     return result
+  }
+
+  /// element wise multiplication
+  @inlinable public static func *= (lhs: inout Self, rhs: Self) {
+    precondition(lhs.size == rhs.size, "sizes must match")
+
+    for i in 0..<lhs.count {
+      lhs.data[i] *= rhs.data[i]
+    }
+  }
+
+  /// element wise multiplication
+  @inlinable public static func * (lhs: Self, rhs: Self) -> Self {
+    var result = lhs
+    result *= rhs
+    return result
+  }
+
+  @inlinable public static func *= (lhs: inout Self, rhs: Element) {
+    for i in 0..<lhs.count {
+      lhs.data[i] *= rhs
+    }
+  }
+
+  @inlinable public static func * (lhs: Self, rhs: Element) -> Self {
+    var result = lhs
+    result *= rhs
+    return result
+  }
+
+  @inlinable public static func * (lhs: Element, rhs: Self) -> Self {
+    rhs * lhs
   }
 
   /// - Returns: sum of all elements

@@ -37,4 +37,84 @@ class TensorTests: XCTestCase {
 		XCTAssertEqual(tensor.data, squeezed.data)
 		XCTAssertEqual(squeezed.shape, [2, 2])
 	}
+
+	func testUnsqueezed() {
+		let tensor = Tensor([2, 3, 1], [
+			1, 2, 3,
+			4, 5, 6
+		])
+		let unsqueezed = tensor.unsqueezed(dim: 1)
+		XCTAssertEqual(unsqueezed.shape, [2, 1, 3, 1])
+		XCTAssertEqual(tensor.data, unsqueezed.data)
+	}
+
+	func testTensorTensorAddition() {
+		let tensor1 = Tensor([3, 1], [1, 2, 3])
+		let tensor2 = Tensor([3, 1], [2, 3, 4])
+		let targetResult = Tensor([3, 1], [3, 5, 7])
+		var testResult1 = tensor1
+		testResult1 += tensor2
+		let testResult2 = tensor1 + tensor2
+		XCTAssertEqual(testResult1, targetResult)
+		XCTAssertEqual(testResult2, targetResult)
+	}
+
+	/*func testTensorScalarAddition() {
+		let tensor = Tensor([3, 2], [1, 2, 3, 4, 5, 6])
+		let scalar = 2
+		let targetResult = Tensor([3, 2], [3, 4, 5, 6, 7, 8])
+		var testResult1 = tensor
+		testResult1 += scalar
+		let testResult2 = tensor + scalar
+		let testResult3 = scalar + tensor
+		XCTAssertEqual(targetResult, testResult1)
+		XCTAssertEqual(targetResult, testResult2)
+		XCTAssertEqual(targetResult, testResult3)
+	}*/
+
+	func testTensorTensorSubtraction() {
+		let tensor1 = Tensor([3, 1], [1, 2, 3])
+		let tensor2 = Tensor([3, 1], [2, 3, 4])
+		let targetResult = Tensor([3, 1], [-1, -1, -1])
+		var testResult1 = tensor1
+		testResult1 -= tensor2
+		let testResult2 = tensor1 - tensor2
+		XCTAssertEqual(testResult1, targetResult)
+		XCTAssertEqual(testResult2, targetResult)
+	}
+
+	func testTensorTensorMultiplication() {
+		let tensor1 = Tensor([3, 1], [1, 2, 3])
+		let tensor2 = Tensor([3, 1], [2, 3, 4])
+		let targetResult = Tensor([3, 1], [2, 6, 12])
+		var testResult1 = tensor1
+		testResult1 *= tensor2
+		let testResult2 = tensor1 * tensor2
+		XCTAssertEqual(testResult1, targetResult)
+		XCTAssertEqual(testResult2, targetResult)
+	}
+
+	func testTensorScalarMultiplication() {
+		let tensor = Tensor([3, 2], [1, 2, 3, 4, 5, 6])
+		let scalar = 2
+		let targetResult = Tensor([3, 2], [2, 4, 6, 8, 10, 12])
+		var testResult1 = tensor
+		testResult1 *= scalar
+		let testResult2 = tensor * scalar
+		let testResult3 = scalar * tensor
+		XCTAssertEqual(targetResult, testResult1)
+		XCTAssertEqual(targetResult, testResult2)
+		XCTAssertEqual(targetResult, testResult3)
+	}
+
+	func testTensorTensorDivision() {
+		let tensor1 = Tensor<Double>([3, 1], [1, 2, 3])
+		let tensor2 = Tensor<Double>([3, 1], [2, 3, 4])
+		let targetResult = Tensor<Double>([3, 1], [0.5, 2.0/3, 3.0/4])
+		var testResult1 = tensor1
+		testResult1 /= tensor2
+		let testResult2 = tensor1 / tensor2
+		XCTAssertTrue(testResult1.isEqual(to: targetResult, within: 0.01))
+		XCTAssertTrue(testResult2.isEqual(to: targetResult, within: 0.01))
+	}
 }
