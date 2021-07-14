@@ -6,6 +6,8 @@
 
 # Nifty
 
+**initially forked from**: [philipce/nifty](https://github.com/philipce/nifty)
+
 [Nifty](https://github.com/nifty-swift/Nifty) is a general-purpose numerical computing library for the Swift programming language, made with performance and ease-of-use in mind. 
 
 ## Getting Started
