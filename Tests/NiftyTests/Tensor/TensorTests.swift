@@ -16,6 +16,18 @@ class TensorTests: XCTestCase {
 		XCTAssertFalse(tensor1.isEqual(to: tensor3, within: 0.01))
 	}
 
+	func testTransposed() {
+		XCTAssertEqual(Tensor([2, 4], [
+			1, 2, 3, 4,
+			5, 6, 7, 8
+		]).transposed(), Tensor([4, 2], [
+			1, 5,
+			2, 6,
+			3, 7,
+			4, 8
+		]))
+	}
+
 	func testAllSqueezed() {
 		let tensor = Tensor<Double>([2, 1, 2, 1], [
 			1, 2,

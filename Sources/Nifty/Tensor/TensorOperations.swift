@@ -13,6 +13,26 @@ extension Tensor {
     Self(shape.filter { $0 != 1 }, data)
   }
 
+  /// works only for 2 dimensional tensors (matrices)
+  /// - Returns: swapped columns and rows
+  public func transposed() -> Self {
+    precondition(dim == 2, "transposed() only works for matrices (2 dimensional tensors)")
+
+    var swappedData = [Element]()
+    swappedData.reserveCapacity(numel)
+
+    let nRows = shape[0]
+    let nColumns = shape[1]
+
+    for x in 0..<nColumns {
+      for y in 0..<nRows {
+        swappedData.append(data[y * nColumns + x])
+      }
+    }
+
+    return Self([nColumns, nRows], swappedData)
+  }
+
   public func dataConverted<T>(_ convert: (Element) -> T) -> Tensor<T> {
     Tensor<T>(shape, data.map(convert))
   }
