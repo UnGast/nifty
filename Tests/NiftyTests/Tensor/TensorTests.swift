@@ -15,4 +15,14 @@ class TensorTests: XCTestCase {
 		let tensor3 = Tensor<Double>([4], [1.01, -1.99, 3.5, 3.98])
 		XCTAssertFalse(tensor1.isEqual(to: tensor3, within: 0.01))
 	}
+
+	func testAllSqueezed() {
+		let tensor = Tensor<Double>([2, 1, 2, 1], [
+			1, 2,
+			3, 4,
+		])
+		let squeezed = tensor.squeezed()
+		XCTAssertEqual(tensor.data, squeezed.data)
+		XCTAssertEqual(squeezed.shape, [2, 2])
+	}
 }
