@@ -7,6 +7,10 @@ extension Tensor {
       return nil
     }
   }
+
+  public var numel: Int {
+    count
+  }
 }
 
 extension Tensor: Equatable where Element: Equatable {
@@ -15,7 +19,40 @@ extension Tensor: Equatable where Element: Equatable {
   }
 }
 
+extension Tensor: Hashable where Element: Hashable {
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(data)
+  }
+}
+
 extension Tensor where Element: Numeric {
+  public static func identityMatrix(_ n: Int) -> Self {
+    var elements = [Element]()
+    elements.reserveCapacity(n * n)
+    for x in 0..<n {
+      for y in 0..<n {
+        elements.append(x == y ? 1 : 0)
+      }
+    }
+    return Tensor([n, n], elements)
+  }
+
+  /// - Returns: true if shape equals and element wise absolute difference <= within, false otherwise
+  public func isEqual(to other: Self, within threshold: Element) -> Bool where Element: Comparable {
+    if shape != other.shape {
+      return false
+    }
+
+    let diff = (self - other).abs()
+    for i in 0..<numel {
+      if diff.data[i] > threshold {
+        return false
+      }
+    }
+    
+    return true
+  }
+
   public static func += (lhs: inout Self, rhs: Self) {
     precondition(lhs.size == rhs.size, "sizes must match")
 
@@ -56,6 +93,11 @@ extension Tensor where Element: Numeric {
       result.data[i] = Swift.abs(result.data[i])
     }
     return result
+  }
+
+  /// - Returns: element wise abs, same as when not applied, because using on non-signed numeric value
+  public func abs() -> Self where Element: Comparable {
+    return self
   }
 }
 
