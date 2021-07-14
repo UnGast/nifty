@@ -89,9 +89,23 @@ public protocol TensorProtocol: CustomStringConvertible
 }
 
 extension TensorProtocol {
+    /// Initialize a new tensor protocol type of the given size from an array of data.
+    ///
+    /// - Parameters:
+    ///    - size: number of elements in each dimension
+    ///    - data: data
+    public init(_ size: [Int], _ data: [Element]) {
+        self.init(size, data, name: nil, showName: nil)
+    }
+
     public var shape: [Int] {
         size
     }
+
+    public var numel: Int {
+        count
+    }
+
     public var dim: Int {
         size.count
     }

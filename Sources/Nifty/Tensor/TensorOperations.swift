@@ -8,13 +8,13 @@ extension Tensor {
     }
   }
 
-  public var numel: Int {
-    count
-  }
-
   /// - Returns: same data, but all dimensions with size of 1 removed
   public func squeezed() -> Self {
     Self(shape.filter { $0 != 1 }, data)
+  }
+
+  public func dataConverted<T>(_ convert: (Element) -> T) -> Tensor<T> {
+    Tensor<T>(shape, data.map(convert))
   }
 }
 
