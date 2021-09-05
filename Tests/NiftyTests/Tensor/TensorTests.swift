@@ -117,4 +117,11 @@ class TensorTests: XCTestCase {
 		XCTAssertTrue(testResult1.isEqual(to: targetResult, within: 0.01))
 		XCTAssertTrue(testResult2.isEqual(to: targetResult, within: 0.01))
 	}
+
+	func testDot() {
+		let tensor1 = Tensor<Double>([2], [1, 2])
+		let tensor2 = Tensor<Double>([2], [3, 4])
+		let result = tensor1.dot(tensor2)
+		XCTAssertEqual(result, Tensor<Double>([1], [11]))
+	}
 }
