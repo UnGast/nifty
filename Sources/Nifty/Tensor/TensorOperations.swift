@@ -147,8 +147,8 @@ extension Tensor where Element: Numeric {
   }
 
   /// - Returns: sum of all elements
-  public func sum() -> Element {
-    data.reduce(into: Element.zero) { $0 += $1 }
+  public func sum() -> Self {
+    Self([1], [data.reduce(into: Element.zero) { $0 += $1 }])
   }
 
   /// - Returns: element wise abs
