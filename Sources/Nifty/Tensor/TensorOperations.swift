@@ -223,15 +223,20 @@ extension Tensor where Element: BinaryFloatingPoint {
       fatalError("matmul: dimensions 1 of first and 0 of second must match in size, are: \(shape[1]), \(other.shape[0])")
     }
 
-    var result = Tensor([shape[0], other.shape[1]], Array<Element>(repeating: 0, count: shape[0] * other.shape[1]))
+    var result = Tensor([shape[0], other.shape[1]], value: 0)
 
-    for row in 0..<shape[0] {
-      for column in 0..<other.shape[1] {
-        var dot: Element = 0
-        for i in 0..<shape[1] {
-          dot += self[row, i] * other[i, column]
+    for row1 in 0..<shape[0] {
+      let resultBase = row1 * result.shape[1]
+      let mat1Base = row1 * shape[1]
+
+      for row2 in 0..<other.shape[0] {
+        let mat2Base = row2 * other.shape[1]
+        let mat1Element = data[mat1Base + row2]
+
+        for column in 0..<other.shape[1] {
+          result.data[resultBase + column] +=
+            mat1Element * other.data[mat2Base + column] 
         }
-        result[row, column] = dot
       }
     }
 
