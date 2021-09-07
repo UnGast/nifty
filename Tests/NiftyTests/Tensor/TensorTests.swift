@@ -118,6 +118,13 @@ class TensorTests: XCTestCase {
 		XCTAssertTrue(testResult2.isEqual(to: targetResult, within: 0.01))
 	}
 
+	func testMatmul() {
+		let tensor1 = Tensor<Double>([3, 2], [1, 2, 3, 4, 5, 6])
+		let tensor2 = Tensor<Double>([2, 1], [2, 4])
+		let result = tensor1.matmul(tensor2)
+		XCTAssertEqual(result, Tensor<Double>([3, 1], [10, 22, 34]))
+	}
+
 	func testDot() {
 		let tensor1 = Tensor<Double>([2], [1, 2])
 		let tensor2 = Tensor<Double>([2], [3, 4])
